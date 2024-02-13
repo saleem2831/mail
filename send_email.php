@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST['message'];
     
     // Recipient email address
-    $to = 'info@anagramdx.com';
+    $to = 'saleem.s@bgtsol.com';
     
     // Subject
     $subject = 'Message from ' . $name;
@@ -39,7 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPAuth = true;
         $mail->Username = $smtpUsername;
         $mail->Password = $smtpPassword;
-        $mail->SMTPSecure = 'tls';
+        // $mail->SMTPSecure = 'tls';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $smtpPort;
         
         // Sender and recipient
@@ -50,6 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isHTML(false);
         $mail->Subject = $subject;
         $mail->Body = $email_content;
+
+        // Add custom header: MIME-Version
+        $mail->addCustomHeader('MIME-Version', '1.0');  
+
+        // Set content type
+        $mail->ContentType = 'text/html; charset=UTF-8';    
         
         // Send email
         $mail->send();
